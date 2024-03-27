@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "maven"
+    }
+
+    stages {
+
+        stage('SCM checkout') {
+            steps {
+                // Get some code from a GitHub repository
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vanamramalakshmi/dockerJenkins.git']])
+
+            }
+        }
+
+        stage('Build processing'){
+
+            steps{
+
+                bat "mvn clean install"
+            }
+        }
+
+
+        }
+    }
+
